@@ -4,7 +4,6 @@ import pandas as pd
 from scipy.optimize import minimize
 
 def compute_returns(price_df):
-    # price_df: DataFrame columns are tickers, index dates
     returns = price_df.pct_change().dropna()
     return returns
 
@@ -19,7 +18,6 @@ def mean_variance_optimization(price_df, returns_period="1y", risk_free_rate=0.0
         port_vol = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
         return port_return, port_vol
 
-    # Minimize negative Sharpe (maximize Sharpe)
     def neg_sharpe(weights):
         r, vol = portfolio_performance(weights)
         return -(r - risk_free_rate) / vol
@@ -36,9 +34,6 @@ def mean_variance_optimization(price_df, returns_period="1y", risk_free_rate=0.0
         raise Exception("Optimization failed")
 
 def simple_rebalance_suggestion(current_holdings, target_weights, current_prices):
-    # current_holdings: dict symbol -> shares
-    # target_weights: pd.Series symbol -> weight
-    # current_prices: dict symbol -> price
     total_value = sum(current_holdings.get(sym, 0) * current_prices.get(sym, 0) for sym in target_weights.index)
     suggestions = {}
     for sym, w in target_weights.items():
@@ -46,5 +41,5 @@ def simple_rebalance_suggestion(current_holdings, target_weights, current_prices
         current_value = current_holdings.get(sym, 0) * current_prices.get(sym, 0)
         delta_value = target_value - current_value
         delta_shares = delta_value / current_prices.get(sym, 1)
-        suggestions[sym] = delta_shares  # positive -> buy, negative -> sell
+        suggestions[sym] = delta_shares
     return suggestions

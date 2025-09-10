@@ -10,7 +10,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String)  # removed unique=True
     risk_tolerance = Column(String, default="medium")
     income = Column(Float, default=0.0)
     goals = Column(JSON, default="[]")  # list of dicts
@@ -29,25 +29,15 @@ class Portfolio(Base):
     user_id = Column(Integer)
     holdings = Column(JSON, default="{}")  # {symbol: shares}
 
-
-def init_db(db_uri="sqlite:///pf_coach.db"):
+def init_db(db_uri="sqlite:///smart_finance_coach.db"):
     engine = create_engine(db_uri, connect_args={"check_same_thread": False})
     Base.metadata.create_all(engine)
     return sessionmaker(bind=engine)()
 
-# convenience helpers
-# def get_or_create_user(session, name="default_user"):
-#     user = session.query(User).filter_by(name=name).first()
-#     if not user:
-#         user = User(name=name, risk_tolerance="medium", income=0.0, goals=json.dumps([]))
-#         session.add(user)
-#         session.commit()
-#     return user
-
 def get_or_create_user(session, name="local_user"):
     user = session.query(User).filter_by(name=name).first()
     if not user:
-        user = User(name=name, income=0.0, risk_tolerance="medium",goals=json.dumps([]))
+        user = User(name=name, income=0.0, risk_tolerance="medium", goals=json.dumps([]))
         session.add(user)
         session.commit()
     return user
