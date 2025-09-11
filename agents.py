@@ -62,7 +62,7 @@ class MarketAnalysisAgent:
             return pd.DataFrame()
         df = pd.concat(dfs.values(), axis=1)
         df.columns = dfs.keys()
-        return df.fillna(method='ffill').dropna()
+        return df.ffill().dropna()
 
     def get_crypto_price(self, coin_id):
         return fetch_crypto_price(coin_id)
