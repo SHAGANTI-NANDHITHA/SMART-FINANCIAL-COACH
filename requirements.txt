@@ -1,3 +1,5 @@
+--only-binary=:all:
+
 altair==5.5.0
 annotated-types==0.7.0
 attrs==25.1.0
@@ -30,7 +32,7 @@ jsonschema-specifications
 MarkupSafe==2.1.5
 multitasking==0.0.12
 narwhals==2.4.0
-numpy<2
+numpy==1.26.4
 packaging>=24
 pandas==2.2.2
 peewee==3.17.5
