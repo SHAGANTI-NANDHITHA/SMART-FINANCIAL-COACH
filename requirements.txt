@@ -84,3 +84,4 @@ scikit-learn==1.4.2
 matplotlib==3.9.0
 SQLAlchemy==2.0.30
 yfinance==0.2.40
+python-dotenv==1.0.1
