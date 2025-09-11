@@ -85,3 +85,6 @@ matplotlib==3.9.0
 SQLAlchemy==2.0.30
 yfinance==0.2.40
 python-dotenv==1.0.1
+pydantic==2.11.7
+requests==2.32.5
+scipy==1.16.1
